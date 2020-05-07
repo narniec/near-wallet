@@ -151,10 +151,13 @@ export const { requestCode, setupRecoveryMessage, deleteRecoveryMethod, sendNewR
         wallet.checkAccountAvailable.bind(wallet),
         () => defaultCodesFor('account.available')
     ],
-    GET_TRANSACTIONS: [getTransactionsApi.bind(wallet), () => ({})],
+    GET_TRANSACTIONS: [
+        getTransactionsApi.bind(wallet), 
+        (accountId) => ({ accountId })
+    ],
     GET_TRANSACTION_STATUS: [
         ((transactionExtraInfo.bind(wallet))),
-        (hash) => ({ hash })
+        (hash, signer_id, accountId) => ({ hash, accountId })
     ],
     CLEAR: null,
     CLEAR_CODE: null

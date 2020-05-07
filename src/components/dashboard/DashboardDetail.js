@@ -97,7 +97,7 @@ class DashboardDetail extends Component {
                         image={activityGreyImage}
                         title={<Translate id='dashboard.activity' />}
                         to={`${process.env.EXPLORER_URL || 'https://explorer.nearprotocol.com'}/accounts/${accountId}`}
-                        transactions={transactions}
+                        transactions={transactions && transactions[accountId]}
                         accountId={accountId}
                         formLoader={formLoader}
                         getTransactionStatus={getTransactionStatus}
