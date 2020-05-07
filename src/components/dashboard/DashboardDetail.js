@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { Translate } from 'react-localize-redux'
 import { withRouter } from 'react-router-dom'
 
-import { getAccessKeys, getTransactions, getTransactionStatus } from '../../actions/account'
+import { getAccessKeys } from '../../actions/account'
+import { getTransactions, getTransactionStatus } from '../../actions/transactions'
 
 import DashboardSection from './DashboardSection'
 import DashboardActivity from './DashboardActivity'
@@ -69,6 +70,7 @@ class DashboardDetail extends Component {
     render() {
         const { loader, notice } = this.state
         const { authorizedApps, fullAccessKeys, transactions, amount, accountId, formLoader, getTransactionStatus } = this.props
+
         return (
             <PageContainer
                 title={(
@@ -97,7 +99,7 @@ class DashboardDetail extends Component {
                         image={activityGreyImage}
                         title={<Translate id='dashboard.activity' />}
                         to={`${process.env.EXPLORER_URL || 'https://explorer.nearprotocol.com'}/accounts/${accountId}`}
-                        transactions={transactions && transactions[accountId]}
+                        transactions={transactions}
                         accountId={accountId}
                         formLoader={formLoader}
                         getTransactionStatus={getTransactionStatus}
@@ -128,8 +130,9 @@ const mapDispatchToProps = {
     getTransactionStatus
 }
 
-const mapStateToProps = ({ account }) => ({
-    ...account
+const mapStateToProps = ({ account, transactions }) => ({
+    ...account,
+    transactions: transactions[account.accountId] || []
 })
 
 export default connect(
